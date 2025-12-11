@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { ThemeToggle } from "./theme-toggle";
+import { AuthActions } from "./auth-actions";
 
 export const Navbar = () => {
   return (
@@ -8,7 +9,7 @@ export const Navbar = () => {
       <div className="flex items-center gap-8">
         <Link href="/">
           <h1 className="text-3xl font-bold">
-            Blog<span className="text-blue-500">App</span>
+            Blog<span className="text-indigo-500">X</span>
           </h1>
         </Link>
         <div className="flex items-center gap-1">
@@ -24,24 +25,7 @@ export const Navbar = () => {
         </div>
       </div>
       <div className="flex items-center gap-5">
-        <div className="flex items-center gap-2">
-          <Link
-            href="/auth/sign-up"
-            className={buttonVariants({
-              variant: "default",
-            })}
-          >
-            Sign Up
-          </Link>
-          <Link
-            href="/auth/login"
-            className={buttonVariants({
-              variant: "outline",
-            })}
-          >
-            Login
-          </Link>
-        </div>
+        <AuthActions />
         <ThemeToggle />
       </div>
     </nav>
