@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { buttonVariants } from "../ui/button";
-import { ThemeToggle } from "./theme-toggle";
-import { AuthActions } from "./auth-actions";
+import { ThemeToggle } from "../theme-toggle";
+import { AuthActions } from "../auth-actions";
+import { buttonVariants } from "../../ui/button";
 
-export const Navbar = () => {
+export const NavbarDesktop = () => {
   return (
     <nav className="flex items-center justify-between py-5">
       <div className="flex items-center gap-8">
