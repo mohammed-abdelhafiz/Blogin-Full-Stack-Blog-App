@@ -15,7 +15,7 @@ export const AuthActions = () => {
   return (
     <div className="flex items-center gap-2 w-full md:w-auto">
       {isLoading ? (
-        <Loader2 className="animate-spin size-5 mr-2 text-muted-foreground" />
+        <Loader2 className="animate-spin size-5 mr-2 text-primary" />
       ) : isAuthenticated ? (
         <Button
           variant="destructive"

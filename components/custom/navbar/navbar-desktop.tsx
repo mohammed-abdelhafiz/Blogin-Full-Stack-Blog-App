@@ -9,7 +9,7 @@ export const NavbarDesktop = () => {
       <div className="flex items-center gap-8">
         <Link href="/">
           <h1 className="text-3xl font-bold">
-            Blog<span className="text-indigo-500">X</span>
+            Blog<span className="text-primary">in</span>
           </h1>
         </Link>
         <div className="flex items-center gap-1">

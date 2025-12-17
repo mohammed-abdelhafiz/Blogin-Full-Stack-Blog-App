@@ -7,18 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PageHeader } from "@/components/custom/page-header";
 
 export default function CreatePage() {
   return (
     <div className="py-12">
-      <div className="text-center mb-12 space-y-1">
-        <h1 className="text-3xl font-extrabold tracking-tight">
-          Create blog
-        </h1>
-        <p className="text-lg text-muted-foreground">
-          Share your thoughts with the big world.
-        </p>
-      </div>
+      <PageHeader 
+        title="Create New Blog"
+        description="Create a new blog article and share it with everyone."
+      />
       <Card className="w-full max-w-xl mx-auto">
         <CardHeader>
           <CardTitle>Create New Blog</CardTitle>

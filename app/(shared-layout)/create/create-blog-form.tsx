@@ -7,7 +7,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { BlogArticleData, blogArticleSchema } from "@/schemas/blog";
+import { BlogArticleData, blogArticleSchema } from "@/schemas/blogArticle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -25,16 +25,21 @@ export const CreateBlogForm = () => {
     defaultValues: {
       title: "",
       content: "",
+      image: undefined,
     },
   });
   const onSubmit = (data: BlogArticleData) => {
     startTransition(async () => {
       try {
+        if (data.image && data.image.size > 1024 * 1024) {
+          toast.error("Image size must be less than 1MB");
+          return;
+        }
         await createBlogAction(data);
         toast.success("Blog article created successfully");
         router.push("/blog");
       } catch {
-        toast.error("Failed to create blog article , please try again later");
+        toast.error(`Failed to create blog article , Please try again`);
       }
     });
   };
@@ -66,6 +71,32 @@ export const CreateBlogForm = () => {
                 aria-invalid={fieldState.invalid}
                 placeholder="Super interesting content"
                 {...field}
+              />
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+        <Controller
+          name="image"
+          control={form.control}
+          render={({ field, fieldState }) => (
+            <Field>
+              <FieldLabel>Image</FieldLabel>
+              <Input
+                aria-invalid={fieldState.invalid}
+                placeholder="Super interesting content"
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) {
+                    return;
+                  }
+                  if (file.size > 1024 * 1024) {
+                    toast.error("Image size must be less than 1MB");
+                  }
+                  field.onChange(file);
+                }}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>

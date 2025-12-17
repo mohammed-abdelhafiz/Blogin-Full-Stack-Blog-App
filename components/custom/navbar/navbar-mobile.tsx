@@ -25,7 +25,7 @@ export const NavbarMobile = () => {
     <nav className="flex items-center justify-between py-5">
       <Link href="/">
         <h1 className="text-2xl font-bold">
-          Blog<span className="text-indigo-500">X</span>
+          Blog<span className="text-primary">in</span>
         </h1>
       </Link>
       <DropdownMenu>
@@ -34,7 +34,7 @@ export const NavbarMobile = () => {
             <Menu />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56 sm:hidden" align="center">
+        <DropdownMenuContent className="w-56 sm:hidden" align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <Link
