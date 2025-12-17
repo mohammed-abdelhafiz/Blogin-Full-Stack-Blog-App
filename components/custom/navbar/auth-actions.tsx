@@ -1,12 +1,12 @@
 "use client";
 
 import { useConvexAuth } from "convex/react";
-import { Button } from "../ui/button";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export const AuthActions = () => {
   const { isLoading, isAuthenticated } = useConvexAuth();

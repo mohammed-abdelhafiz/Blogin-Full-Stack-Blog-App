@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { AuthActions } from "./auth-actions";
+import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "../theme-toggle";
-import { AuthActions } from "../auth-actions";
-import { buttonVariants } from "../../ui/button";
 
 export const NavbarDesktop = () => {
   return (

@@ -11,12 +11,12 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { Button } from "../../ui/button";
 import { Book, Home, Menu, Plus } from "lucide-react";
-import { AuthActions } from "../auth-actions";
+import { AuthActions } from "./auth-actions";
 import { useTheme } from "next-themes";
+import { Button } from "@/components/ui/button";
 
 export const NavbarMobile = () => {
   const { setTheme } = useTheme();
