@@ -1,6 +1,7 @@
+import { Id } from "@/convex/_generated/dataModel";
 import z from "zod";
 
-export const blogArticleSchema = z.object({
+export const blogArticleFormSchema = z.object({
   title: z
     .string()
     .min(3, "Title must be at least 3 characters long")
@@ -11,4 +12,10 @@ export const blogArticleSchema = z.object({
   }),
 });
 
-export type BlogArticleData = z.infer<typeof blogArticleSchema>;
+export const commentFormSchema = z.object({
+  content: z.string().min(3, "Content must be at least 3 characters long"),
+  blogArticleId: z.custom<Id<"blogArticles">>(),
+});
+
+export type BlogArticleFormData = z.infer<typeof blogArticleFormSchema>;
+export type CommentFormData = z.infer<typeof commentFormSchema>;

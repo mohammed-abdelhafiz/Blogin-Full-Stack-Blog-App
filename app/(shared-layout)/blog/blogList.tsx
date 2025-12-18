@@ -1,4 +1,3 @@
-"use client";
 import {
   Card,
   CardContent,
@@ -8,15 +7,11 @@ import {
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Preloaded, usePreloadedQuery } from "convex/react";
+import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
-type RealTimeBlogListProps = {
-  preloaded_getBlogArticles: Preloaded<typeof api.blogArticles.getBlogArticles>;
-};
-export const RealTimeBlogList = ({
-  preloaded_getBlogArticles,
-}: RealTimeBlogListProps) => {
-  const blogArticles = usePreloadedQuery(preloaded_getBlogArticles);
+
+export const BlogList = async () => {
+  const blogArticles = await fetchQuery(api.blogArticles.getBlogArticles);
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {blogArticles.map((article) => (
@@ -25,11 +20,10 @@ export const RealTimeBlogList = ({
             <Image
               src={
                 article.imageUrl ??
-                "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                "https://images.pexels.com/photos/1591056/pexels-photo-1591056.jpeg"
               }
               alt={article.title}
               fill
-              loading="eager"
               className="rounded-t-lg object-cover"
             />
           </CardHeader>

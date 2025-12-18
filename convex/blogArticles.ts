@@ -45,10 +45,20 @@ export const getBlogArticles = query({
 });
 
 export const getBlogArticleById = query({
-  args: { id: v.id("blogArticles") },
+  args: { blogArticleId: v.id("blogArticles") },
   handler: async (ctx, args) => {
-    const blogArticle = await ctx.db.get("blogArticles", args.id);
-    return blogArticle;
+    const blogArticle = await ctx.db.get("blogArticles", args.blogArticleId);
+    if (!blogArticle) {
+      return null;
+    }
+    const imageUrl = blogArticle.imageStorageId
+      ? await ctx.storage.getUrl(blogArticle.imageStorageId)
+      : null;
+
+    return {
+      ...blogArticle,
+      imageUrl,
+    };
   },
 });
 

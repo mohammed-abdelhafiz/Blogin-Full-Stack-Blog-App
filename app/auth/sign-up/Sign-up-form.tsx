@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Field,
   FieldError,
@@ -8,7 +8,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Controller, useForm } from "react-hook-form";
 
@@ -19,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import { FormButton } from "@/components/custom/form-button";
 
 export const SignUpForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -99,16 +99,7 @@ export const SignUpForm = () => {
             </Field>
           )}
         />
-        <Button type="submit" disabled={isPending}>
-          {isPending ? (
-            <>
-              <Loader2 className="size-4 animate-spin" />
-              <span>Loading...</span>
-            </>
-          ) : (
-            <span>Sign Up</span>
-          )}
-        </Button>
+        <FormButton isPending={isPending}>Sign Up</FormButton>
       </FieldGroup>
       <div className="flex items-center mt-2 mx-2">
         <p className="text-sm">Already have an account?</p>

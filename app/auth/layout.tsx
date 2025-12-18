@@ -1,7 +1,5 @@
+import { GoBackButton } from "@/components/custom/go-back-button";
 import { ThemeToggle } from "@/components/custom/theme-toggle";
-import { buttonVariants } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 
 export default function AuthLayout({
@@ -11,12 +9,7 @@ export default function AuthLayout({
 }) {
   return (
     <div className="flex min-h-screen items-center justify-center">
-      <div className="absolute top-5 left-5">
-        <Link href="/" className={buttonVariants({ variant: "secondary" })}>
-          <ArrowLeft className="size-4" />
-          Go Back
-        </Link>
-      </div>
+      <GoBackButton className="absolute top-5 left-5" />
       <div className="absolute top-5 right-5">
         <ThemeToggle />
       </div>

@@ -1,13 +1,13 @@
 "use server";
 
-import { BlogArticleData, blogArticleSchema } from "@/schemas/blogArticle";
+import { BlogArticleFormData, blogArticleFormSchema } from "@/schemas/blogArticle";
 import { fetchMutation } from "convex/nextjs";
 import { getToken } from "@/lib/auth-server";
 import { api } from "@/convex/_generated/api";
 import { revalidatePath } from "next/cache";
 
-export const createBlogAction = async (data: BlogArticleData) => {
-  const parsed = blogArticleSchema.safeParse(data);
+export const createBlogAction = async (data: BlogArticleFormData) => {
+  const parsed = blogArticleFormSchema.safeParse(data);
   if (!parsed.success) {
     throw new Error("Invalid data");
   }

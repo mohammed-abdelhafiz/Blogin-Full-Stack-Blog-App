@@ -1,31 +1,28 @@
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import Image from "next/image";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
+import { GoBackButton } from "@/components/custom/go-back-button";
+import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import { CommentsSection } from "./comments-section";
+
+interface BlogArticlePageProps {
+  params: Promise<{ blogArticleId: Id<"blogArticles"> }>;
+}
 
 export default async function BlogArticlePage({
   params,
-}: {
-  params: Promise<{ blogArticleId: Id<"blogArticles"> }>;
-}) {
-  let article;
-
+}: BlogArticlePageProps) {
+  let blogArticle;
   try {
     const { blogArticleId } = await params;
-    article = await fetchQuery(api.blogArticles.getBlogArticleById, {
-      id: blogArticleId,
+    blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
+      blogArticleId,
     });
-    if (!article) {
+
+    if (!blogArticle) {
       return redirect("/blog");
     }
   } catch {
@@ -33,53 +30,60 @@ export default async function BlogArticlePage({
   }
 
   return (
-    <div>
-      <Card className="pt-0">
-        <CardHeader className="relative w-full h-48 overflow-hidden">
-          <Image
-            src={
-              "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
-            alt={article.title}
-            fill
-            className="rounded-t-lg"
-          />
-        </CardHeader>
-        <CardContent>
-          <Link
-            href={`/blog/${article._id}`}
-            className="text-xl hover:text-primary transition-colors font-bold"
-          >
-            {article.title}
-          </Link>
-          <p className="text-sm line-clamp-1 text-muted-foreground">
-            {article.content}
-          </p>
-        </CardContent>
-        <CardFooter>
-          <Link
-            href={`/blog/${article._id}`}
-            className={buttonVariants({
-              className: "w-full",
-            })}
-          >
-            Read More
-          </Link>
-        </CardFooter>
-      </Card>
+    <div className="max-w-3xl mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
+      <GoBackButton label="Back to blog" className="mb-4" variant="outline" />
+      <div className="h-[400px] w-full mb-8 rounded-xl overflow-hidden shadow-sm relative">
+        <Image
+          src={
+            blogArticle.imageUrl ??
+            "https://images.pexels.com/photos/1591056/pexels-photo-1591056.jpeg"
+          }
+          alt={blogArticle.title}
+          fill
+          className="object-cover hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+      <div className="flex flex-col space-y-3">
+        <h1 className="text-3xl font-bold tracking-tight">
+          {blogArticle.title}
+        </h1>
+        <p className="text-muted-foreground text-sm ml-1">
+          Published at{" "}
+          {new Date(blogArticle._creationTime).toLocaleString("en-GB", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+          })}
+        </p>
+      </div>
+      <Separator className="my-8" />
+      <p className="text-foreground/90 text-lg leading-relaxed whitespace-pre-wrap">
+        {blogArticle.content}
+      </p>
+      <Separator className="my-8" />
+      <CommentsSection />
     </div>
   );
 }
 
-export const generateMetadata = async ({
-  params,
-}: {
-  params: Promise<{ blogArticleId: Id<"blogArticles"> }>;
-}) => {
-  const { blogArticleId } = await params;
-  const blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
-    id: blogArticleId,
-  });
+export const generateMetadata = async ({ params }: BlogArticlePageProps) => {
+  let blogArticle;
+  try {
+    const { blogArticleId } = await params;
+    blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
+      blogArticleId,
+    });
+
+    if (!blogArticle) {
+      return redirect("/blog");
+    }
+  } catch {
+    return redirect("/blog");
+  }
   return {
     title: blogArticle?.title,
     description: blogArticle?.content,

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Field,
   FieldError,
@@ -7,9 +6,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { BlogArticleData, blogArticleSchema } from "@/schemas/blogArticle";
+import { BlogArticleFormData, blogArticleFormSchema } from "@/schemas/blogArticle";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -17,18 +15,19 @@ import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { createBlogAction } from "@/app/actions";
 import { Textarea } from "@/components/ui/textarea";
+import { FormButton } from "@/components/custom/form-button";
 export const CreateBlogForm = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm({
-    resolver: zodResolver(blogArticleSchema),
+    resolver: zodResolver(blogArticleFormSchema),
     defaultValues: {
       title: "",
       content: "",
       image: undefined,
     },
   });
-  const onSubmit = (data: BlogArticleData) => {
+  const onSubmit = (data: BlogArticleFormData) => {
     startTransition(async () => {
       try {
         if (data.image && data.image.size > 1024 * 1024) {
@@ -102,16 +101,7 @@ export const CreateBlogForm = () => {
             </Field>
           )}
         />
-        <Button type="submit" disabled={isPending}>
-          {isPending ? (
-            <>
-              <Loader2 className="size-4 animate-spin" />
-              <span>Loading...</span>
-            </>
-          ) : (
-            <span>Create</span>
-          )}
-        </Button>
+      <FormButton isPending={isPending}>Create</FormButton>
       </FieldGroup>
     </form>
   );
