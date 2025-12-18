@@ -18,7 +18,7 @@ export const RealTimeBlogList = ({
 }: RealTimeBlogListProps) => {
   const blogArticles = usePreloadedQuery(preloaded_getBlogArticles);
   return (
-    <>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {blogArticles.map((article) => (
         <Card key={article._id} className="pt-0">
           <CardHeader className="relative w-full h-48 overflow-hidden">
@@ -30,7 +30,7 @@ export const RealTimeBlogList = ({
               alt={article.title}
               fill
               loading="eager"
-              className="rounded-t-lg"
+              className="rounded-t-lg object-cover"
             />
           </CardHeader>
           <CardContent>
@@ -56,6 +56,6 @@ export const RealTimeBlogList = ({
           </CardFooter>
         </Card>
       ))}
-    </>
+    </div>
   );
 };
