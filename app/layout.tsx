@@ -16,8 +16,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BlogX",
-  description: "BlogX - The best blog app",
+  title: "Blogin",
+  description: "Read latest blogs and share your thoughts with the world",
+  keywords: ["blog", "blogs", "latest blogs", "share your thoughts"],
+  authors: [
+    {
+      name: "Mohamed Abdelhafiz",
+      url: "www.linkedin.com/in/mohamed-abdelhafiz-dev",
+    },
+  ],
+  creator: "Mohamed Abdelhafiz",
+  category: "blog",
+  classification: "blog",
 };
 
 export default function RootLayout({
