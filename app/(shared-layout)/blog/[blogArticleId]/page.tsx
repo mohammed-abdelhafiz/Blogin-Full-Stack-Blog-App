@@ -1,5 +1,5 @@
 import { api } from "@/convex/_generated/api";
-import { fetchQuery } from "convex/nextjs";
+ import { fetchQuery, preloadQuery } from "convex/nextjs";
 
 import { redirect } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
@@ -15,19 +15,13 @@ interface BlogArticlePageProps {
 export default async function BlogArticlePage({
   params,
 }: BlogArticlePageProps) {
-  let blogArticle;
-  try {
-    const { blogArticleId } = await params;
-    blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
+  const { blogArticleId } = await params;
+  const [blogArticle, preloadedComments] = await Promise.all([
+    getBlogArticleById(blogArticleId),
+    preloadQuery(api.comments.getCommentsByBlogId, {
       blogArticleId,
-    });
-
-    if (!blogArticle) {
-      return redirect("/blog");
-    }
-  } catch {
-    return redirect("/blog");
-  }
+    }),
+  ]);
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
@@ -65,27 +59,32 @@ export default async function BlogArticlePage({
         {blogArticle.content}
       </p>
       <Separator className="my-8" />
-      <CommentsSection />
+      <CommentsSection preloadedComments={preloadedComments} />
     </div>
   );
 }
 
 export const generateMetadata = async ({ params }: BlogArticlePageProps) => {
-  let blogArticle;
+  const { blogArticleId } = await params;
+  const blogArticle = await getBlogArticleById(blogArticleId);
+  return {
+    title: blogArticle.title,
+    description: blogArticle.content,
+  };
+};
+
+export const getBlogArticleById = async (blogArticleId: Id<"blogArticles">) => {
   try {
-    const { blogArticleId } = await params;
-    blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
+    const blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
       blogArticleId,
     });
 
     if (!blogArticle) {
       return redirect("/blog");
     }
+
+    return blogArticle;
   } catch {
     return redirect("/blog");
   }
-  return {
-    title: blogArticle?.title,
-    description: blogArticle?.content,
-  };
 };
