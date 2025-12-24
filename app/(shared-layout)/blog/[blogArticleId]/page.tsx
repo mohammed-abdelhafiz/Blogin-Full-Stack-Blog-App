@@ -50,8 +50,8 @@ export default async function BlogArticlePage({
         <h1 className="text-3xl font-bold tracking-tight">
           {blogArticle.title}
         </h1>
-        <div className="flex items-center gap-2">
-          <p className="text-muted-foreground text-sm ml-1">
+        <div className="ml-1">
+          <p className="text-muted-foreground text-sm">
             Published at{" "}
             {new Date(blogArticle._creationTime).toLocaleString("en-GB", {
               year: "numeric",

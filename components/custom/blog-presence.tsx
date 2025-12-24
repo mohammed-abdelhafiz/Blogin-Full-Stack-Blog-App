@@ -17,8 +17,11 @@ export const BlogPresence = ({ roomId, userId }: BlogPresenceProps) => {
   }
   return (
     <div className="flex items-center gap-2">
-      <p className="text-xs uppercase tracking-wide text-muted-foreground">
-        viewing now
+      <p className="text-xs tracking-wide text-muted-foreground">
+        {presenceState.length === 1
+          ? "You"
+          : "You and " + (presenceState.length - 1) + " others"}{" "}
+        are reading this article
       </p>
       <div className="text-black">
         <FacePile presenceState={presenceState} />
