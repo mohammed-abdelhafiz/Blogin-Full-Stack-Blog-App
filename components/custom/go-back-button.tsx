@@ -14,7 +14,9 @@ const arrowSizeMap = {
   "6": "size-6",
 };
 
-interface GoBackButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface GoBackButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: string;
   label?: string;
   arrowSize?: keyof typeof arrowSizeMap;
   variant?:
@@ -32,6 +34,7 @@ export const GoBackButton = ({
   variant = "ghost",
   type = "button",
   onClick,
+  href,
   ...props
 }: GoBackButtonProps) => {
   const router = useRouter();
@@ -39,6 +42,8 @@ export const GoBackButton = ({
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (onClick) {
       onClick(e);
+    } else if (href) {
+      router.push(href);
     } else {
       router.back();
     }

@@ -29,7 +29,12 @@ export default async function BlogArticlePage({
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
-      <GoBackButton label="Back to blog" className="mb-4" variant="outline" />
+      <GoBackButton
+        label="Back to blog"
+        className="mb-4"
+        variant="outline"
+        href="/blog"
+      />
       <div className="h-[400px] w-full mb-8 rounded-xl overflow-hidden shadow-sm relative">
         <Image
           src={
