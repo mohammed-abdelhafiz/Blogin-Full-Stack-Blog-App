@@ -1,5 +1,5 @@
 import { api } from "@/convex/_generated/api";
- import { fetchQuery, preloadQuery } from "convex/nextjs";
+import { fetchQuery, preloadQuery } from "convex/nextjs";
 
 import { redirect } from "next/navigation";
 import { Id } from "@/convex/_generated/dataModel";
@@ -7,6 +7,8 @@ import { GoBackButton } from "@/components/custom/go-back-button";
 import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { CommentsSection } from "./comments-section";
+import { BlogPresence } from "@/components/custom/blog-presence";
+import { getToken } from "@/lib/auth-server";
 
 interface BlogArticlePageProps {
   params: Promise<{ blogArticleId: Id<"blogArticles"> }>;
@@ -16,11 +18,13 @@ export default async function BlogArticlePage({
   params,
 }: BlogArticlePageProps) {
   const { blogArticleId } = await params;
-  const [blogArticle, preloadedComments] = await Promise.all([
+  const token = await getToken();
+  const [blogArticle, preloadedComments, userId] = await Promise.all([
     getBlogArticleById(blogArticleId),
     preloadQuery(api.comments.getCommentsByBlogId, {
       blogArticleId,
     }),
+    fetchQuery(api.presence.getUserId, {}, { token }),
   ]);
 
   return (
@@ -41,18 +45,21 @@ export default async function BlogArticlePage({
         <h1 className="text-3xl font-bold tracking-tight">
           {blogArticle.title}
         </h1>
-        <p className="text-muted-foreground text-sm ml-1">
-          Published at{" "}
-          {new Date(blogArticle._creationTime).toLocaleString("en-GB", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-          })}
-        </p>
+        <div className="flex items-center gap-2">
+          <p className="text-muted-foreground text-sm ml-1">
+            Published at{" "}
+            {new Date(blogArticle._creationTime).toLocaleString("en-GB", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+              hour12: true,
+            })}
+          </p>
+          {userId && <BlogPresence roomId={blogArticleId} userId={userId} />}
+        </div>
       </div>
       <Separator className="my-8" />
       <p className="text-foreground/90 text-lg leading-relaxed whitespace-pre-wrap">
