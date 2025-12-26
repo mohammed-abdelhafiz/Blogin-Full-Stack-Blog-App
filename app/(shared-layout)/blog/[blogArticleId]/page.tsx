@@ -17,15 +17,20 @@ interface BlogArticlePageProps {
 export default async function BlogArticlePage({
   params,
 }: BlogArticlePageProps) {
-  const { blogArticleId } = await params;
-  const token = await getToken();
-  const [blogArticle, preloadedComments, userId] = await Promise.all([
-    getBlogArticleById(blogArticleId),
+  const blogArticleId = await getValidBlogId(params);
+
+  const [blogArticle, preloadedComments] = await Promise.all([
+    getBlogArticle(blogArticleId),
     preloadQuery(api.comments.getCommentsByBlogId, {
       blogArticleId,
     }),
-    fetchQuery(api.presence.getUserId, {}, { token }),
   ]);
+
+  const token = await getToken();
+  let userId;
+  if (token) {
+    userId = await fetchQuery(api.presence.getUserId, {}, { token });
+  }
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4 animate-in fade-in duration-500 relative">
@@ -77,26 +82,34 @@ export default async function BlogArticlePage({
 }
 
 export const generateMetadata = async ({ params }: BlogArticlePageProps) => {
-  const { blogArticleId } = await params;
-  const blogArticle = await getBlogArticleById(blogArticleId);
+  const blogArticleId = await getValidBlogId(params);
+  const blogArticle = await getBlogArticle(blogArticleId);
   return {
     title: blogArticle.title,
     description: blogArticle.content,
   };
 };
 
-export const getBlogArticleById = async (blogArticleId: Id<"blogArticles">) => {
-  try {
-    const blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
-      blogArticleId,
-    });
+async function getValidBlogId(params: BlogArticlePageProps["params"]) {
+  const { blogArticleId } = await params;
+  const isValidId = await fetchQuery(api.blogArticles.isValidBlogArticleId, {
+    blogArticleId,
+  });
 
-    if (!blogArticle) {
-      return redirect("/blog");
-    }
-
-    return blogArticle;
-  } catch {
+  if (!isValidId) {
+    console.log("Invalid blog article id redirecting to /blog");
     return redirect("/blog");
   }
-};
+  return blogArticleId;
+}
+
+async function getBlogArticle(blogArticleId: Id<"blogArticles">) {
+  const blogArticle = await fetchQuery(api.blogArticles.getBlogArticleById, {
+    blogArticleId,
+  });
+  if (!blogArticle) {
+    console.log("Blog article not found redirecting to /blog");
+    return redirect("/blog");
+  }
+  return blogArticle;
+}

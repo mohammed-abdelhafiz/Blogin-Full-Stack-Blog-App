@@ -25,6 +25,7 @@ export const createBlogArticle = mutation({
 });
 
 export const getBlogArticles = query({
+  args: {},
   handler: async (ctx) => {
     const blogArticles = await ctx.db
       .query("blogArticles")
@@ -70,5 +71,16 @@ export const generateImageUploadUrl = mutation({
     }
     const uploadUrl = await ctx.storage.generateUploadUrl();
     return uploadUrl;
+  },
+});
+
+export const isValidBlogArticleId = query({
+  args: { blogArticleId: v.string() },
+  handler: async (ctx, args) => {
+    const blogArticleId = ctx.db.normalizeId(
+      "blogArticles",
+      args.blogArticleId
+    );
+    return Boolean(blogArticleId);
   },
 });
