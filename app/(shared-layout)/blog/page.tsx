@@ -1,10 +1,6 @@
 import { Metadata } from "next";
 import { PageHeader } from "@/components/custom/page-header";
 import { BlogList } from "./blogList";
-import { Suspense } from "react";
-import { BlogListSkeleton } from "./blog-list-skeleton";
-
-export const dynamic = "force-static";
 
 export default async function BlogPage() {
   return (
@@ -13,9 +9,7 @@ export default async function BlogPage() {
         title="Our Blog"
         description="Insights, thoughts, and trends from our team."
       />
-      <Suspense fallback={<BlogListSkeleton />}>
-        <BlogList />
-      </Suspense>
+      <BlogList />
     </div>
   );
 }

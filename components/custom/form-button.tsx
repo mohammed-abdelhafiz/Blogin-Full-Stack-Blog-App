@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { LoadingSpinner } from "./loading-spinner";
 
 export const FormButton = ({
   isPending,
@@ -13,7 +13,7 @@ export const FormButton = ({
     <Button type="submit" disabled={isPending}>
       {isPending ? (
         <>
-          <Loader2 className="size-4 animate-spin" />
+          <LoadingSpinner color="foreground"/>
           <span>Loading...</span>
         </>
       ) : (

@@ -3,10 +3,10 @@
 import { useConvexAuth } from "convex/react";
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "../loading-spinner";
 
 export const AuthActions = () => {
   const { isLoading, isAuthenticated } = useConvexAuth();
@@ -15,7 +15,7 @@ export const AuthActions = () => {
   return (
     <div className="flex items-center gap-2 w-full md:w-auto">
       {isLoading ? (
-        <Loader2 className="animate-spin size-5 mr-2 text-primary" />
+        <LoadingSpinner className="mr-2" />
       ) : isAuthenticated ? (
         <Button
           variant="destructive"

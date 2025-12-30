@@ -1,10 +1,13 @@
 "use server";
 
-import { BlogArticleFormData, blogArticleFormSchema } from "@/schemas/blogArticle";
+import {
+  BlogArticleFormData,
+  blogArticleFormSchema,
+} from "@/schemas/blogArticle";
 import { fetchMutation } from "convex/nextjs";
 import { getToken } from "@/lib/auth-server";
 import { api } from "@/convex/_generated/api";
-import { revalidatePath } from "next/cache";
+import { updateTag } from "next/cache";
 
 export const createBlogAction = async (data: BlogArticleFormData) => {
   const parsed = blogArticleFormSchema.safeParse(data);
@@ -39,5 +42,5 @@ export const createBlogAction = async (data: BlogArticleFormData) => {
       token,
     }
   );
-  revalidatePath("/blog");
+  updateTag("blog-articles-list");
 };
