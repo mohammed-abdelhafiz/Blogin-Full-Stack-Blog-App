@@ -6,7 +6,10 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { BlogArticleFormData, blogArticleFormSchema } from "@/schemas/blogArticle";
+import {
+  BlogArticleFormData,
+  blogArticleFormSchema,
+} from "@/schemas/blogArticle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
@@ -16,7 +19,11 @@ import { toast } from "sonner";
 import { createBlogAction } from "@/app/actions";
 import { Textarea } from "@/components/ui/textarea";
 import { FormButton } from "@/components/custom/form-button";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 export const CreateBlogForm = () => {
+  const isLoggedIn = useQuery(api.auth.getCurrentUser);
+
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm({
@@ -33,6 +40,9 @@ export const CreateBlogForm = () => {
         if (data.image && data.image.size > 1024 * 1024) {
           toast.error("Image size must be less than 1MB");
           return;
+        }
+        if (!isLoggedIn) {
+          return router.push("/auth/login");
         }
         await createBlogAction(data);
         toast.success("Blog article created successfully");
@@ -101,7 +111,7 @@ export const CreateBlogForm = () => {
             </Field>
           )}
         />
-      <FormButton isPending={isPending}>Create</FormButton>
+        <FormButton isPending={isPending}>Create</FormButton>
       </FieldGroup>
     </form>
   );

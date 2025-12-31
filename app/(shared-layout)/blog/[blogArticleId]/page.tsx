@@ -9,7 +9,7 @@ import { GoBackButton } from "@/components/custom/go-back-button";
 import { Separator } from "@/components/ui/separator";
 
 import { CommentsSection } from "./comments-section";
-import { BlogMetaData } from "./blog-metadata";
+import { BlogDetails } from "./blog-details";
 import { BlogCardImage } from "./blog-card-image";
 
 interface BlogArticlePageProps {
@@ -52,7 +52,7 @@ export default async function BlogArticlePage({
           {blogArticle.title}
         </h1>
         {/* Blog metadata */}
-        <BlogMetaData
+        <BlogDetails
           blogCreationTime={blogArticle._creationTime}
           blogArticleId={blogArticleId}
           userId={userId}

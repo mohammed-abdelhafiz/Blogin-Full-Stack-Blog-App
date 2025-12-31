@@ -7,23 +7,21 @@ type LoadingProps = {
   color?: Colors;
   size?: number;
   className?: string;
-  absoluteCentered?: boolean;
+  centeredX?: boolean;
 };
 
 export const LoadingSpinner = ({
   color = "primary",
   size = 20,
   className = "",
-  absoluteCentered = false,
+  centeredX = false,
 }: LoadingProps) => {
   return (
     <Loader2
       className={clsx(
+        centeredX && "relative left-1/2 -translate-x-1/2",
         `animate-spin text-${color}`,
-        className,
-        absoluteCentered
-          ? "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          : ""
+        className
       )}
       size={size}
       aria-label="Loading"

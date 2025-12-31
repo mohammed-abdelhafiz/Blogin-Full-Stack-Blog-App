@@ -17,3 +17,9 @@ export type CommentType = {
   authorId: string;
   authorName: string;
 };
+
+export type SearchResultArticle = {
+  _id: string;
+  title: string;
+  content: string;
+};

@@ -1,17 +1,17 @@
 import { BlogPresence } from "@/components/custom/blog-presence";
 import { Id } from "@/convex/_generated/dataModel";
 
-interface BlogMetaDataProps {
+interface BlogDetailsProps {
   blogArticleId: Id<"blogArticles">;
   userId: string | null;
   blogCreationTime: number;
 }
 
-export const BlogMetaData = ({
+export const BlogDetails = ({
   blogArticleId,
   userId,
   blogCreationTime,
-}: BlogMetaDataProps) => {
+}: BlogDetailsProps) => {
   return (
     <div className="ml-1">
       <p className="text-muted-foreground text-sm">

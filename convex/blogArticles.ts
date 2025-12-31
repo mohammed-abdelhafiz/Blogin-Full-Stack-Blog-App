@@ -1,6 +1,8 @@
 import { mutation, query } from "./_generated/server";
 import { ConvexError, v } from "convex/values";
 import { authComponent } from "./auth";
+import { SearchResultArticle } from "@/lib/types";
+import { Doc } from "./_generated/dataModel";
 
 // Create a new blog article with the given title, content
 export const createBlogArticle = mutation({
@@ -82,5 +84,44 @@ export const isValidBlogArticleId = query({
       args.blogArticleId
     );
     return Boolean(blogArticleId);
+  },
+});
+
+//full-text search on blogArticles table
+export const searchBlogArticles = query({
+  args: {
+    searchTerm: v.string(),
+    limit: v.number(),
+  },
+  handler: async (ctx, { searchTerm, limit }) => {
+    const results: SearchResultArticle[] = [];
+
+    function pushUniqueArticles(articles: Doc<"blogArticles">[]) {
+      for (const article of articles) {
+        if (results.some((result) => result._id === article._id)) continue;
+
+        results.push(article);
+
+        if (results.length >= limit) break;
+      }
+    }
+    const matchingTitles = await ctx.db
+      .query("blogArticles")
+      .withSearchIndex("search_title", (q) => q.search("title", searchTerm))
+      .take(limit);
+    pushUniqueArticles(matchingTitles);
+
+    if (results.length < limit) {
+      const matchingContent = await ctx.db
+        .query("blogArticles")
+        .withSearchIndex("search_content", (q) =>
+          q.search("content", searchTerm)
+        )
+        .take(limit);
+
+      pushUniqueArticles(matchingContent);
+    }
+
+    return results;
   },
 });
