@@ -13,7 +13,7 @@ import { MobileNavActions } from "./mobile-nav-actions";
 export const NavbarMobile = () => {
   return (
     <nav className="flex items-center justify-between py-5">
-      <Link href="/">
+      <Link href="/blog">
         <h1 className="text-2xl font-bold">
           Blog<span className="text-primary">in</span>
         </h1>

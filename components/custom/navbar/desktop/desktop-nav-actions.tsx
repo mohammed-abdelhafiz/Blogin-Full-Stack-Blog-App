@@ -1,5 +1,6 @@
 "use client";
 
+import { SearchInput } from "../shared/search-input";
 import { AuthActions } from "../shared/auth-actions";
 import { ThemeToggle } from "../../theme-toggle";
 import { useConvexAuth } from "convex/react";
@@ -9,6 +10,7 @@ export const DesktopNavActions = () => {
 
   return (
     <div className="flex items-center gap-5">
+      <SearchInput isAuthenticated={isAuthenticated} />
       <AuthActions isLoading={isLoading} isAuthenticated={isAuthenticated}/>
       <ThemeToggle />
     </div>
