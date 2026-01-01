@@ -17,6 +17,7 @@ export const BlogDetails = ({
       <p className="text-muted-foreground text-sm">
         Published at{" "}
         {new Date(blogCreationTime).toLocaleString("en-EG", {
+          timeZone: "Africa/Cairo",
           year: "numeric",
           month: "short",
           day: "numeric",
