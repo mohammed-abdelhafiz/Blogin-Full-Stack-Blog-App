@@ -41,7 +41,9 @@ export const LoginForm = () => {
             router.push("/");
           },
           onError: ({ error }) => {
-            toast.error(error.message);
+            toast.error(
+              error.message || "Something went wrong, please try again later"
+            );
           },
         },
       });

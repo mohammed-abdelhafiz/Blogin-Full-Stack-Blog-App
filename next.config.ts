@@ -9,7 +9,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
       },
       {
-        hostname: "agile-tern-707.convex.cloud",
+        hostname: "agile-tern-707.convex.cloud",//development
+        protocol: "https",
+      },
+      {
+        hostname: "groovy-dalmatian-476.convex.cloud",//production
         protocol: "https",
       }
     ],
