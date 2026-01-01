@@ -15,7 +15,7 @@ export const MobileNavLinks = () => {
       </DropdownMenuItem>
       <DropdownMenuItem>
         <Link
-          href="/create"
+          href="/blog/create"
           className="flex w-full items-center justify-between"
         >
           Create <Plus />

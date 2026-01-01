@@ -3,7 +3,7 @@ import { fetchQuery, preloadQuery } from "convex/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 
 import { getToken } from "@/lib/auth-server";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 import { GoBackButton } from "@/components/custom/go-back-button";
 import { Separator } from "@/components/ui/separator";
@@ -86,8 +86,7 @@ async function getValidBlogId(params: BlogArticlePageProps["params"]) {
   });
 
   if (!isValidId) {
-    console.log("Invalid blog article id redirecting to /blog");
-    return redirect("/blog");
+    return notFound();
   }
   return blogArticleId;
 }
@@ -97,8 +96,7 @@ async function getBlogArticle(blogArticleId: Id<"blogArticles">) {
     blogArticleId,
   });
   if (!blogArticle) {
-    console.log("Blog article not found redirecting to /blog");
-    return redirect("/blog");
+    return notFound();
   }
   return blogArticle;
 }

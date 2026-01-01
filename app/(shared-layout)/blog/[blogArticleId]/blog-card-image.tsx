@@ -15,7 +15,7 @@ export const BlogCardImage = ({ blogTitle, imageUrl }: BlogCardImageProps) => {
         }
         alt={blogTitle}
         fill
-        className="object-cover hover:scale-105 transition-transform duration-500"
+        className="hover:scale-105 transition-transform duration-500"
       />
     </div>
   );

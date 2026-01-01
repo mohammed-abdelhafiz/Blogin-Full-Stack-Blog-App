@@ -13,7 +13,7 @@ export const DesktopNavLinks = () => {
         <Link href="/blog" className={buttonVariants({ variant: "ghost" })}>
           Blog
         </Link>
-        <Link href="/create" className={buttonVariants({ variant: "ghost" })}>
+        <Link href="/blog/create" className={buttonVariants({ variant: "ghost" })}>
           Create
         </Link>
       </div>
