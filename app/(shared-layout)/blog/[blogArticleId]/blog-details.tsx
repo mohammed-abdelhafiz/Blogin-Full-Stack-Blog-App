@@ -16,7 +16,7 @@ export const BlogDetails = ({
     <div className="ml-1">
       <p className="text-muted-foreground text-sm">
         Published at{" "}
-        {new Date(blogCreationTime).toLocaleString("en-GB", {
+        {new Date(blogCreationTime).toLocaleString("en-EG", {
           year: "numeric",
           month: "short",
           day: "numeric",
