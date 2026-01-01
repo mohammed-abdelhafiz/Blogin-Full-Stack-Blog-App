@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { useQuery } from "convex/react";
 import { Search } from "lucide-react";
 import Link from "next/link";
@@ -44,7 +44,7 @@ export const SearchInput = ({ isAuthenticated }: SearchInputProps) => {
 
   return (
     <div
-      className={clsx(
+      className={cn(
         "relative hidden",
         isAuthenticated
           ? "[@media(min-width:800px)]:block"

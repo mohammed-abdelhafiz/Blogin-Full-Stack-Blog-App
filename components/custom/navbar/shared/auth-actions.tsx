@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "../../loading-spinner";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 interface AuthActionsProps {
   isLoading: boolean;
@@ -26,7 +26,7 @@ export const AuthActions = ({
       {isLoading ? (
         <LoadingSpinner
           centeredX={isMobile}
-          className={clsx(!isMobile && "mr-2")}
+          className={cn(!isMobile && "mr-2")}
         />
       ) : isAuthenticated ? (
         <Button

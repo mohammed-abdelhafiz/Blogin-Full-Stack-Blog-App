@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import clsx from "clsx";
 
 type Colors = "primary" | "secondary" | "destructive" | "foreground";
 
@@ -18,7 +18,7 @@ export const LoadingSpinner = ({
 }: LoadingProps) => {
   return (
     <Loader2
-      className={clsx(
+      className={cn(
         centeredX && "relative left-1/2 -translate-x-1/2",
         `animate-spin text-${color}`,
         className
