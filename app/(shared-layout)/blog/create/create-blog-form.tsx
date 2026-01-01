@@ -45,8 +45,8 @@ export const CreateBlogForm = () => {
           return router.push("/auth/login");
         }
         await createBlogAction(data);
-        toast.success("Blog article created successfully");
         router.push("/blog");
+        toast.success("Blog article created successfully");
       } catch {
         toast.error(`Failed to create blog article , Please try again`);
       }
