@@ -1,3 +1,4 @@
+"use client";
 import { BlogPresence } from "@/components/custom/blog-presence";
 import { Id } from "@/convex/_generated/dataModel";
 import { formatDateForUser } from "@/lib/utils";
