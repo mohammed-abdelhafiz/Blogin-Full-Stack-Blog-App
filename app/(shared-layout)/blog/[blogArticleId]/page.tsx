@@ -3,7 +3,7 @@ import { fetchQuery, preloadQuery } from "convex/nextjs";
 import { Id } from "@/convex/_generated/dataModel";
 
 import { getToken } from "@/lib/auth-server";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { GoBackButton } from "@/components/custom/go-back-button";
 import { Separator } from "@/components/ui/separator";
@@ -86,7 +86,7 @@ async function getValidBlogId(params: BlogArticlePageProps["params"]) {
   });
 
   if (!isValidId) {
-    return notFound();
+    return redirect("/blog");
   }
   return blogArticleId;
 }
@@ -96,7 +96,7 @@ async function getBlogArticle(blogArticleId: Id<"blogArticles">) {
     blogArticleId,
   });
   if (!blogArticle) {
-    return notFound();
+    return redirect("/blog");
   }
   return blogArticle;
 }
