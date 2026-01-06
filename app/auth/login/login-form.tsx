@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { FormButton } from "@/components/custom/form-button";
+import { revalidatePathAction } from "@/app/actions";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -39,6 +40,7 @@ export const LoginForm = () => {
           onSuccess: () => {
             toast.success("Logged in successfully");
             router.push("/");
+            revalidatePathAction("/blog/create");
           },
           onError: ({ error }) => {
             toast.error(

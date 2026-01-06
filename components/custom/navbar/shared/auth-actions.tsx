@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "../../loading-spinner";
 import { cn } from "@/lib/utils";
+import { revalidatePathAction } from "@/app/actions";
 
 interface AuthActionsProps {
   isLoading: boolean;
@@ -38,6 +39,7 @@ export const AuthActions = ({
                 onSuccess: () => {
                   toast.success("Logged out successfully");
                   router.push("/");
+                  revalidatePathAction("/blog/create");
                 },
                 onError: ({ error }) => {
                   toast.error(error.message);

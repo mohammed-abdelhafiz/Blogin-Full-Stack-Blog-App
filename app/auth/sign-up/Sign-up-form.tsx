@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { FormButton } from "@/components/custom/form-button";
+import { revalidatePathAction } from "@/app/actions";
 
 export const SignUpForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -41,6 +42,7 @@ export const SignUpForm = () => {
           onSuccess: () => {
             toast.success("Account created successfully");
             router.push("/");
+            revalidatePathAction("/blog/create");
           },
           onError: ({ error }) => {
             toast.error(

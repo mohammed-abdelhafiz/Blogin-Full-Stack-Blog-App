@@ -7,7 +7,7 @@ import {
 import { fetchMutation } from "convex/nextjs";
 import { getToken } from "@/lib/auth-server";
 import { api } from "@/convex/_generated/api";
-import { updateTag } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 
 export const createBlogAction = async (data: BlogArticleFormData) => {
   const parsed = blogArticleFormSchema.safeParse(data);
@@ -43,4 +43,8 @@ export const createBlogAction = async (data: BlogArticleFormData) => {
     }
   );
   updateTag("blog-articles-list");
+};
+
+export const revalidatePathAction = async (path: string) => {
+  revalidatePath(path);
 };
